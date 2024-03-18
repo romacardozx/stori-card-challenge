@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Resumen de Transacciones</title>
-    <link rel="stylesheet" href="{{css_link}}">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Resumen de Cuenta</title>
+   {{css_link}}
 </head>
 <body>
-<header>
-    <img src="cid:logo" alt="Logo">
-    <h1>Resumen de Transacciones</h1>
-</header>
-<main>
-    <section>
-        <h2>Detalles</h2>
-        <p>Saldo total: {{ .TotalBalance }}</p>
-        <p>Número de transacciones:</p>
-        <ul>
+<div class="container">
+   <div class="header">
+      <img src="cid:logo" alt="Stori Logo" class="logo">
+      <h1>Resumen de Cuenta</h1>
+   </div>
+   <div class="content">
+      <p class="intro">¡Este correo contiene la información de tu cuenta!</p>
+      <div class="details">
+         <div class="detail-section">
+            <h2>Mes</h2>
             {{ range $month, $transactions := .TransactionsByMonth }}
-            <li>{{ $month }}: {{ len $transactions }} transacciones</li>
+            <p>{{ $month }}: {{ len $transactions }}</p>
             {{ end }}
-        </ul>
-        <p>Monto promedio de débitos: {{ .AvgDebit }}</p>
-        <p>Monto promedio de créditos: {{ .AvgCredit }}</p>
-    </section>
-</main>
-<footer>
-    <p>&copy; 2023 Tu Empresa</p>
-</footer>
+         </div>
+         <div class="detail-section">
+            <h2>Monto promedio de crédito</h2>
+            <p>{{ .AvgCredit }}</p>
+         </div>
+         <div class="detail-section">
+            <h2>Monto promedio de débito</h2>
+            <p>{{ .AvgDebit }}</p>
+         </div>
+         <div class="detail-section">
+            <h2>Balance total</h2>
+            <p>{{ .TotalBalance }}</p>
+         </div>
+      </div>
+   </div>
+</div>
 </body>
 </html>

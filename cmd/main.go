@@ -21,20 +21,17 @@ func main() {
 		log.Fatalf("Failed to read transactions from CSV: %v", err)
 	}
 
-	// Process transactions
 	summary, err := transaction.ProcessTransactions(transactions)
 	if err != nil {
 		log.Fatalf("Failed to process transactions: %v", err)
 	}
 
-	// Connect to the database
 	db, err := database.NewDatabase(cfg.PostgresConfig)
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}
 	defer db.Close()
 
-	// Save transactions and summary to the database
 	err = database.SaveTransactionsAndSummary(db, transactions, summary)
 	if err != nil {
 		log.Fatalf("Failed to save transactions and summary to the database: %v", err)

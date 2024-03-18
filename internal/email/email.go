@@ -27,9 +27,9 @@ func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary) error 
 		return fmt.Errorf("failed to read CSS file: %v", err)
 	}
 
-	htmlContent := strings.Replace(string(templateHTML), "{{css_link}}", "<style>"+string(cssContent)+"</style>", 1)
+	htmlContent := injectCSSIntoTemplate(templateHTML, cssContent)
 
-	body, err := generateEmailBody(htmlContent, summary)
+	body, err := generateEmailBody(string(htmlContent), summary)
 	if err != nil {
 		return err
 	}
@@ -49,6 +49,10 @@ func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary) error 
 	}
 
 	return nil
+}
+
+func injectCSSIntoTemplate(templateHTML, cssContent []byte) []byte {
+	return []byte(strings.Replace(string(templateHTML), "{{css_link}}", "<style>"+string(cssContent)+"</style>", 1))
 }
 
 func generateEmailBody(htmlContent string, summary transaction.Summary) (string, error) {
