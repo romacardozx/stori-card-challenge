@@ -49,7 +49,7 @@ To stop the application and services, press ```Ctrl+C``` in the terminal where d
 docker-compose down
 ```
 
-## APP STRUCTURE
+## Project Structure
 ```sh
 stori-card-challenge/
     ├── README.md
@@ -61,6 +61,9 @@ stori-card-challenge/
     ├── .gitignore
     ├── go.mod
     ├── go.sum
+    ├── assets/
+    │   ├── challenge.pdf
+    │   ├── mastercard.svg
     ├── internal/
     │   ├── config/
     │   │   └── config.go
