@@ -23,15 +23,15 @@
          </div>
          <div class="detail-section">
             <h2>Monto promedio de crédito</h2>
-            <p>{{ .AvgCredit }}</p>
+            <p>{{printf "%.2f" .AvgCredit}}</p>
          </div>
          <div class="detail-section">
             <h2>Monto promedio de débito</h2>
-            <p>{{ .AvgDebit }}</p>
+            <p>{{printf "%.2f" .AvgDebit }}</p>
          </div>
          <div class="detail-section">
             <h2>Balance total</h2>
-            <p>{{ .TotalBalance }}</p>
+            <p>{{printf "%.2f" .TotalBalance }}</p>
          </div>
       </div>
    </div>
