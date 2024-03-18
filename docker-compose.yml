@@ -3,6 +3,8 @@ version: '3'
 services:
   app:
     build: .
+    ports:
+      - 4004:4004
     depends_on:
       - db
     environment:
@@ -20,6 +22,7 @@ services:
       - SMTP_TO=${SMTP_TO}
     volumes:
       - ./transactions.csv:/app/transactions.csv
+    restart: always
 
   db:
     image: postgres:13

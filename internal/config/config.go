@@ -8,6 +8,7 @@ import (
 
 type Config struct {
 	CSVFilePath    string
+	Port           string
 	PostgresConfig PostgresConfig
 	SMTPConfig     SMTPConfig
 }
@@ -33,6 +34,11 @@ func LoadConfig() (*Config, error) {
 	csvFilePath := os.Getenv("CSV_FILE_PATH")
 	if csvFilePath == "" {
 		csvFilePath = "transactions.csv"
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4004"
 	}
 
 	pgHost := os.Getenv("POSTGRES_HOST")
@@ -101,6 +107,7 @@ func LoadConfig() (*Config, error) {
 
 	config := &Config{
 		CSVFilePath:    csvFilePath,
+		Port:           port,
 		PostgresConfig: postgresConfig,
 		SMTPConfig:     smtpConfig,
 	}
