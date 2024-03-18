@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen de Transacciones</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <img src="cid:logo" alt="Stori Logo" class="logo">
+    <h1>Resumen de Transacciones</h1>
+    <div class="summary">
+        <div class="summary-item">
+            <strong>Saldo Total:</strong> {{.TotalBalance}}
+        </div>
+        <div class="summary-item">
+            <strong>Total de Transacciones:</strong> {{.TotalTransactions}}
+        </div>
+        <div class="summary-item">
+            <strong>Monto Promedio de Débito:</strong> {{.AvgDebit}}
+        </div>
+        <div class="summary-item">
+            <strong>Monto Promedio de Crédito:</strong> {{.AvgCredit}}
+        </div>
+    </div>
+    <div class="footer">
+        Este es un correo electrónico generado automáticamente. Por favor, no responda a este mensaje.
+    </div>
+</div>
+</body>
+</html>
+</html>
