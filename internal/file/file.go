@@ -21,7 +21,6 @@ func ReadTransactionsFromCSV(filePath string) ([]transaction.Transaction, error)
 
 	reader := csv.NewReader(file)
 
-	// Saltar el encabezado
 	if _, err := reader.Read(); err != nil {
 		return nil, fmt.Errorf("failed to skip CSV header: %v", err)
 	}
@@ -37,9 +36,8 @@ func ReadTransactionsFromCSV(filePath string) ([]transaction.Transaction, error)
 			return nil, fmt.Errorf("failed to read CSV record: %v", err)
 		}
 
-		// Parsear los campos del registro CSV
 		dateStr := record[1]
-		dateStr = fmt.Sprintf("2024/%s", dateStr) // Agregar el año 2024 a la fecha
+		dateStr = fmt.Sprintf("2024/%s", dateStr)
 		date, err := time.Parse("2006/01/02", dateStr)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse date: %v", err)
