@@ -34,20 +34,19 @@ func NewDatabase(cfg config.PostgresConfig) (*sql.DB, error) {
 
 func createTables(db *sql.DB) error {
 	_, err := db.Exec(`
-		CREATE TABLE IF NOT EXISTS transactions (
-			id SERIAL PRIMARY KEY,
-			date DATE NOT NULL,
-			amount DECIMAL(10, 2) NOT NULL
-		);
+        CREATE TABLE IF NOT EXISTS transactions (
+           id SERIAL PRIMARY KEY,
+           date DATE NOT NULL,
+           amount DECIMAL(10, 2) NOT NULL
+        );
 
-		CREATE TABLE IF NOT EXISTS summary (
-			id SERIAL PRIMARY KEY,
-			total_balance DECIMAL(10, 2) NOT NULL,
-			total_transactions INTEGER NOT NULL,
-			avg_debit DECIMAL(10, 2) NOT NULL,
-			avg_credit DECIMAL(10, 2) NOT NULL
-		);
-	`)
+        CREATE TABLE IF NOT EXISTS summary (
+           id SERIAL PRIMARY KEY,
+           total_balance DECIMAL(10, 2) NOT NULL,
+           avg_debit DECIMAL(10, 2) NOT NULL,
+           avg_credit DECIMAL(10, 2) NOT NULL
+        );
+    `)
 	if err != nil {
 		return fmt.Errorf("failed to create tables: %v", err)
 	}
@@ -73,9 +72,9 @@ func SaveTransactionsAndSummary(db *sql.DB, transactions []transaction.Transacti
 	}
 
 	_, err = tx.Exec(`
-		INSERT INTO summary (total_balance, total_transactions, avg_debit, avg_credit)
-		VALUES ($1, $2, $3, $4)
-	`, summary.TotalBalance, summary.TotalTransactions, summary.AvgDebit, summary.AvgCredit)
+    INSERT INTO summary (total_balance, total_transactions, avg_debit, avg_credit)
+    VALUES ($1, $2, $3, $4)
+`, summary.TotalBalance, summary.TotalTransactions, summary.AvgDebit, summary.AvgCredit)
 	if err != nil {
 		return fmt.Errorf("failed to insert summary: %v", err)
 	}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resumen de Transacciones</title>
-    <link rel="stylesheet" href="cid:styles">
+    <link rel="stylesheet" href="{{css_link}}">
 </head>
 <body>
 <header>
@@ -20,22 +20,12 @@
             <li>{{ $month }}: {{ len $transactions }} transacciones</li>
             {{ end }}
         </ul>
-        <p>Monto promedio de débitos:</p>
-        <ul>
-            {{ range $month, $average := .AverageDebitByMonth }}
-            <li>{{ $month }}: {{ $average }}</li>
-            {{ end }}
-        </ul>
-        <p>Monto promedio de créditos:</p>
-        <ul>
-            {{ range $month, $average := .AverageCreditByMonth }}
-            <li>{{ $month }}: {{ $average }}</li>
-            {{ end }}
-        </ul>
+        <p>Monto promedio de débitos: {{ .AvgDebit }}</p>
+        <p>Monto promedio de créditos: {{ .AvgCredit }}</p>
     </section>
 </main>
 <footer>
-    <p>&copy; 2023 Stori</p>
+    <p>&copy; 2023 Tu Empresa</p>
 </footer>
 </body>
 </html>
