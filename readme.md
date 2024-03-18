@@ -1,6 +1,10 @@
-<div align="left">
-  <h1 style="display: inline-block;">Stori Card Challenge</h1>
-  <img src="assets/mastercard.svg" alt="Mastercard Logo" width="80" height="80" style="vertical-align: middle; margin-left: 10px;">
+<div align="center">
+   <h1 style="display: inline-block; vertical-align: middle; font-size: 32px; font-weight: bold;">
+    Stori Card Challenge
+  </h1>
+  <span style="display: inline-block; vertical-align: middle;">
+    <img src="assets/mastercard.svg" alt="Mastercard Logo" width="60" height="60" style="vertical-align: middle; margin-right: 10px;">
+  </span>
 </div>
 
 #### This project is an application that processes a CSV file of debit and credit transactions, stores the data in a PostgreSQL database and sends a summary by email. It is developed in Go and uses Docker to run it.
