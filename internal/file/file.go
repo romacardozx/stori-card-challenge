@@ -3,52 +3,57 @@ package file
 import (
 	"encoding/csv"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/romacardozx/stori-card-challenge/internal/transaction"
 )
 
 func ReadTransactionsFromCSV(filePath string) ([]transaction.Transaction, error) {
-	// Abrir el archivo CSV
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open CSV file: %v", err)
 	}
 	defer file.Close()
 
-	// Crear un nuevo lector de CSV
 	reader := csv.NewReader(file)
 
-	// Leer todos los registros del archivo CSV
-	records, err := reader.ReadAll()
-	if err != nil {
-		return nil, fmt.Errorf("failed to read CSV records: %v", err)
+	// Saltar el encabezado
+	if _, err := reader.Read(); err != nil {
+		return nil, fmt.Errorf("failed to skip CSV header: %v", err)
 	}
 
 	var transactions []transaction.Transaction
 
-	// Iterar sobre los registros y crear las transacciones
-	for _, record := range records {
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, fmt.Errorf("failed to read CSV record: %v", err)
+		}
+
 		// Parsear los campos del registro CSV
-		date, err := time.Parse("2006-01-02", record[0])
+		dateStr := record[1]
+		dateStr = fmt.Sprintf("2024/%s", dateStr) // Agregar el año 2024 a la fecha
+		date, err := time.Parse("2006/01/02", dateStr)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse date: %v", err)
 		}
 
-		amount, err := strconv.ParseFloat(record[1], 64)
+		amountStr := strings.TrimSpace(record[2])
+		amount, err := strconv.ParseFloat(amountStr, 64)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse amount: %v", err)
 		}
 
-		description := record[2]
-
-		// Crear una transacción y agregarla al slice de transacciones
 		transaction := transaction.Transaction{
-			Date:        date,
-			Amount:      amount,
-			Description: description,
+			Date:   date,
+			Amount: amount,
 		}
 		transactions = append(transactions, transaction)
 	}

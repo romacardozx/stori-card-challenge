@@ -3,30 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Resumen de Transacciones</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cid:styles">
 </head>
 <body>
-<div class="container">
-    <img src="cid:logo" alt="Stori Logo" class="logo">
+<header>
+    <img src="cid:logo" alt="Logo">
     <h1>Resumen de Transacciones</h1>
-    <div class="summary">
-        <div class="summary-item">
-            <strong>Saldo Total:</strong> {{.TotalBalance}}
-        </div>
-        <div class="summary-item">
-            <strong>Total de Transacciones:</strong> {{.TotalTransactions}}
-        </div>
-        <div class="summary-item">
-            <strong>Monto Promedio de Débito:</strong> {{.AvgDebit}}
-        </div>
-        <div class="summary-item">
-            <strong>Monto Promedio de Crédito:</strong> {{.AvgCredit}}
-        </div>
-    </div>
-    <div class="footer">
-        Este es un correo electrónico generado automáticamente. Por favor, no responda a este mensaje.
-    </div>
-</div>
+</header>
+<main>
+    <section>
+        <h2>Detalles</h2>
+        <p>Saldo total: {{ .TotalBalance }}</p>
+        <p>Número de transacciones:</p>
+        <ul>
+            {{ range $month, $transactions := .TransactionsByMonth }}
+            <li>{{ $month }}: {{ len $transactions }} transacciones</li>
+            {{ end }}
+        </ul>
+        <p>Monto promedio de débitos:</p>
+        <ul>
+            {{ range $month, $average := .AverageDebitByMonth }}
+            <li>{{ $month }}: {{ $average }}</li>
+            {{ end }}
+        </ul>
+        <p>Monto promedio de créditos:</p>
+        <ul>
+            {{ range $month, $average := .AverageCreditByMonth }}
+            <li>{{ $month }}: {{ $average }}</li>
+            {{ end }}
+        </ul>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2023 Stori</p>
+</footer>
 </body>
-</html>
 </html>

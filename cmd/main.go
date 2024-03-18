@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/romacardozx/stori-card-challenge/internal/email"
 	"log"
 
 	"github.com/romacardozx/stori-card-challenge/internal/config"
@@ -40,10 +39,15 @@ func main() {
 		log.Fatalf("Failed to save transactions and summary to the database: %v", err)
 	}
 
-	err = email.SendSummaryEmail(cfg.SMTPConfig, summary)
-	if err != nil {
-		log.Fatalf("Failed to send email: %v", err)
-	}
+	//mailer, err := email.New(cfg.SMTPConfig)
+	//if err != nil {
+	//	log.Fatalf("Failed to create mailer: %v", err)
+	//}
+	//
+	//err = mailer.SendSummaryEmail(cfg.SMTPConfig.To, summary)
+	//if err != nil {
+	//	log.Fatalf("Failed to send email: %v", err)
+	//}
 
 	log.Println("Process completed successfully")
 }
