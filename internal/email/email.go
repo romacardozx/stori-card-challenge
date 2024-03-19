@@ -13,16 +13,16 @@ import (
 	"github.com/romacardozx/stori-card-challenge/internal/transaction"
 )
 
-//go:embed template.html styles.css logo.png
+//go:embed template/template.html template/styles.css template/logo.png
 var files embed.FS
 
 func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary) error {
-	templateHTML, err := files.ReadFile("template.html")
+	templateHTML, err := files.ReadFile("template/template.html")
 	if err != nil {
 		return fmt.Errorf("failed to read HTML template: %v", err)
 	}
 
-	cssContent, err := files.ReadFile("styles.css")
+	cssContent, err := files.ReadFile("template/styles.css")
 	if err != nil {
 		return fmt.Errorf("failed to read CSS file: %v", err)
 	}
@@ -36,7 +36,7 @@ func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary) error 
 
 	auth := smtp.PlainAuth("", cfg.Username, cfg.Password, cfg.Host)
 
-	logoBytes, err := files.ReadFile("logo.png")
+	logoBytes, err := files.ReadFile("template/logo.png")
 	if err != nil {
 		return fmt.Errorf("failed to read logo file: %v", err)
 	}
