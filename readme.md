@@ -36,6 +36,7 @@ Replace the values with your own configuration.
 docker-compose up --build
 ```
 This will build the Docker images and start the containers.
+
 3. Once the services are running, you can send a POST with ```To:example@email.com``` in body and request to the ```/process-email``` endpoint to process the transactions and send the summary email. You can use a tool like cURL to send the request:
 ```sh
 curl -X POST -H "Content-Type: application/json" -d '{"To":"example@email.com"}' http://localhost:4004/process-email
