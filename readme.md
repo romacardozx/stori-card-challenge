@@ -26,6 +26,7 @@ SMTP_PASSWORD=your_password_smtp
 SMTP_FROM=your_remitter_email
 ```
 Replace the values with your own configuration.
+
 3. Place your CSV file of transactions in the project root with the name ``` transactions.csv ```
 
 ## Execution
