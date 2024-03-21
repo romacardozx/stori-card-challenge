@@ -20,7 +20,6 @@ SMTP_PORT=your_smtp_port
 SMTP_USERNAME=your_smtp_username=your_smtp_user
 SMTP_PASSWORD=your_password_smtp
 SMTP_FROM=your_remitter_email
-SMTP_TO=your_receiver_email
 ```
 Replace the values with your own configuration.
 3. Place your CSV file of transactions in the project root with the name ``` transactions.csv ```
@@ -32,12 +31,12 @@ Replace the values with your own configuration.
 docker-compose up --build
 ```
 This will build the Docker images and start the containers.
-3. Once the services are running, you can send a POST request to the ```/process-email``` endpoint to process the transactions and send the summary email. You can use a tool like cURL to send the request:
+3. Once the services are running, you can send a POST with ```To:example@email.com``` in body and request to the ```/process-email``` endpoint to process the transactions and send the summary email. You can use a tool like cURL to send the request:
 ```sh
-curl -X POST http://localhost:4004/process-email
+curl -X POST -H "Content-Type: application/json" -d '{"To":"example@email.com"}' http://localhost:4004/process-email
 ```
 * This will trigger the processing of transactions, saving to the database, and sending the email.
-4. Check your inbox of the email specified in the SMTP_TO environment variable to see the transaction summary.
+4. Check your inbox of the email specified in the body to see the transaction summary.
 
 ## Stopping the Application
 To stop the application and services, press ```Ctrl+C``` in the terminal where docker-compose up is running. Then, run the following command to stop and remove the containers:
@@ -57,6 +56,11 @@ stori-card-challenge/
     ├── .gitignore
     ├── go.mod
     ├── go.sum
+    ├── assets/
+    │   ├── mastecard.svg
+    │   └── challenge.pdf
+    ├── handler/
+    │   └── handler.go
     ├── internal/
     │   ├── config/
     │   │   └── config.go
@@ -64,9 +68,10 @@ stori-card-challenge/
     │   │   └── database.go
     │   ├── email/
     │   │   ├── email.go
-    │   │   ├── logo.png
-    │   │   ├── styles.css
-    │   │   └── template.html
+    │   │   └── Template/
+    │   │       ├── styles.css
+    │   │       ├── logo.png
+    │   │       └── template.html
     │   ├── file/
     │   │   └── file.go
     │   └── transaction/

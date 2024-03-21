@@ -16,7 +16,7 @@ import (
 //go:embed template/template.html template/styles.css template/logo.png
 var files embed.FS
 
-func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary) error {
+func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary, To string) error {
 	templateHTML, err := files.ReadFile("template/template.html")
 	if err != nil {
 		return fmt.Errorf("failed to read HTML template: %v", err)
@@ -43,7 +43,7 @@ func SendSummaryEmail(cfg config.SMTPConfig, summary transaction.Summary) error 
 
 	msg := buildEmailMessage(cfg, body, logoBytes)
 
-	err = smtp.SendMail(fmt.Sprintf("%s:%d", cfg.Host, cfg.Port), auth, cfg.From, []string{cfg.To}, msg)
+	err = smtp.SendMail(fmt.Sprintf("%s:%d", cfg.Host, cfg.Port), auth, cfg.From, []string{To}, msg)
 	if err != nil {
 		return fmt.Errorf("failed to send email: %v", err)
 	}

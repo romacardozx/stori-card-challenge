@@ -2,6 +2,7 @@ package handler
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,11 +14,24 @@ import (
 	"github.com/romacardozx/stori-card-challenge/internal/transaction"
 )
 
+type EmailRequest struct {
+	To string `json:"To"`
+}
+
 func ProcessEmail(cfg *config.Config, db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			fmt.Fprint(w, "Method not allowed")
+			return
+		}
+
+		var req EmailRequest
+		err := json.NewDecoder(r.Body).Decode(&req)
+		if err != nil {
+			log.Printf("Failed to decode request body: %v", err)
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprint(w, "Invalid request body")
 			return
 		}
 
@@ -45,7 +59,7 @@ func ProcessEmail(cfg *config.Config, db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		err = email.SendSummaryEmail(cfg.SMTPConfig, summary)
+		err = email.SendSummaryEmail(cfg.SMTPConfig, summary, req.To)
 		if err != nil {
 			log.Printf("Failed to send email: %v", err)
 			w.WriteHeader(http.StatusInternalServerError)
